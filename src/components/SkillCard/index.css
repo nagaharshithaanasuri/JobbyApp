@@ -1,0 +1,16 @@
+.skillItem {
+  display: flex;
+  margin: 20px;
+}
+.img {
+  height: 40px;
+  width: 40px;
+  margin: 4px;
+}
+.para {
+  color: #ffffff;
+  font-family: 'Roboto';
+  font-size: 18px;
+  margin: 4px;
+  margin-top: 10px;
+}

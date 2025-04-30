@@ -1,0 +1,20 @@
+.notCont {
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+  font-family: 'Roboto';
+}
+.imgnf {
+  height: 450px;
+  width: 500px;
+}
+.nhead {
+  color: #ffffff;
+}
+.npara {
+  color: #cbd5e1;
+  font-size: 18px;
+}
