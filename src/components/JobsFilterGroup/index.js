@@ -1,9 +1,31 @@
 import ProfileDetails from '../ProfileDetails'
 import './index.css'
 
+const locationList = [
+  {
+    label: 'Hyderabad',
+    locId: 'Hyderabad',
+  },
+  {
+    label: 'Bangalore',
+    locId: 'Bangalore',
+  },
+  {
+    label: 'Chennai',
+    locId: 'Chennai',
+  },
+  {
+    label: 'Delhi',
+    locId: 'Delhi',
+  },
+  {
+    label: 'Mumbai',
+    locId: 'Mumbai',
+  },
+]
+
 const JobsFiltersGroup = props => {
   const getEmploymentTypeList = () => {
-    
     const {employmentTypesList} = props
     return employmentTypesList.map(employ => {
       const {changeEmploymentType} = props
@@ -32,6 +54,34 @@ const JobsFiltersGroup = props => {
     </div>
   )
 
+  const renderLocationType = () => (
+    <div className="salarycont">
+      <h1 className="shead">Location</h1>
+      <ul className="salarycontainer">{getLocationTypeList()}</ul>
+    </div>
+  )
+
+  const getLocationTypeList = () => {
+    return locationList.map(employ => {
+      const {changeLocation} = props
+      const changeLoc = event => changeLocation(event.target.value)
+
+      return (
+        <li className="li" key={employ.locId} onChange={changeLoc}>
+          <input
+            type="checkbox"
+            className="radio"
+            id={employ.locId}
+            value={employ.locId}
+          />
+          <label htmlFor={employ.locId} className="label">
+            {employ.label}
+          </label>
+        </li>
+      )
+    })
+  }
+
   const getSalaryRangeList = () => {
     const {salaryRangesList} = props
 
@@ -40,7 +90,7 @@ const JobsFiltersGroup = props => {
       const salaryChange = () => changeSalaryRange(each.salaryRangeId)
 
       return (
-        <li className="li" key={each.salaryRangeId} onChange={salaryChange}>
+        <li className="li" key={each.label} onChange={salaryChange}>
           <input
             type="radio"
             id={each.salaryId}
@@ -69,6 +119,8 @@ const JobsFiltersGroup = props => {
       {renderEmploymentType()}
       <hr className="hline" />
       {renderSalaryRange()}
+      <hr className="hline" />
+      {renderLocationType()}
     </div>
   )
 }

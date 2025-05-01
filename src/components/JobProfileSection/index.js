@@ -58,6 +58,7 @@ class JobProfileSection extends Component {
     employmentType: [],
     salaryRange: 0,
     searchInput: '',
+    location: [],
   }
 
   componentDidMount() {
@@ -66,7 +67,7 @@ class JobProfileSection extends Component {
 
   getJobDetails = async () => {
     this.setState({apiStatus: apiStatusConstants.in_progress})
-
+    // let response=false
     const jwtToken = Cookies.get('jwt_token')
     const {salaryRange, employmentType, searchInput} = this.state
     const url = `https://apis.ccbp.in/jobs?employment_type=${employmentType.join()}&minimum_package=${salaryRange}&search=${searchInput}`
@@ -77,9 +78,10 @@ class JobProfileSection extends Component {
       method: 'GET',
     }
     const response = await fetch(url, options)
+    console.log(response)
     if (response.ok === true) {
       const data = await response.json()
-      console.log(data)
+      // console.log(data)
       const updatedData = data.jobs.map(eachJob => ({
         companyLogoUrl: eachJob.company_logo_url,
         employmentType: eachJob.employment_type,
@@ -113,11 +115,21 @@ class JobProfileSection extends Component {
     this.setState({salaryRange: salary}, this.getJobDetails)
   }
 
+  changeLocation = type => {
+    const {location} = this.state
+    this.setState(
+      prveState => ({location: [...prveState.location, type]}),
+      this.getJobDetails,
+    )
+    console.log(location)
+  }
   changeEmploymentType = type => {
+    const {employmentType} = this.state
     this.setState(
       prveState => ({employmentType: [...prveState.employmentType, type]}),
       this.getJobDetails,
     )
+    console.log(employmentType)
   }
 
   jobSuccess = () => {
@@ -174,7 +186,7 @@ class JobProfileSection extends Component {
 
   renderJobProfile = () => {
     const {apiStatus} = this.state
-    console.log(apiStatus)
+    // console.log(apiStatus)
 
     switch (apiStatus) {
       case apiStatusConstants.success:
@@ -194,6 +206,7 @@ class JobProfileSection extends Component {
       <div className="jobDeetsCont">
         <div>
           <JobsFilterGroup
+            changeLocation={this.changeLocation}
             salaryRangesList={salaryRangesList}
             employmentTypesList={employmentTypesList}
             searchInput={searchInput}
